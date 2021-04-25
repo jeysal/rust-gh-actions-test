@@ -1,0 +1,26 @@
+name: check
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: "rustup component add rustfmt clippy"
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --check
+      - uses: actions-rs/cargo@v1
+        with:
+          command: check
+      - uses: actions-rs/clippy-check@v1
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    name: check-${{ matrix.os }}
+    steps:
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
