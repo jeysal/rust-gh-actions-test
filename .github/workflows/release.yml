@@ -8,14 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/cargo@v1
-        with:
-          command: login
-          args: ${{ secrets.CRATES_IO_TOKEN }}
-      - uses: actions-rs/cargo@v1
-        with:
-          command: publish
-          args: --dry-run
+      - run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
+      - run: cargo publish --dry-run
   release:
     strategy:
       matrix:
