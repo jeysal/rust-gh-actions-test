@@ -1,5 +1,11 @@
 name: check
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+      - "**"
+  push:
+    branches:
+      - "**"
 jobs:
   format:
     runs-on: ubuntu-latest
